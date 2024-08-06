@@ -1,6 +1,3 @@
-
-using JsTsLettersStatistics.Statistics;
-
 namespace JsTsLettersStatistics.Tests
 {
     public class LettersStatisticsTest
@@ -11,11 +8,9 @@ namespace JsTsLettersStatistics.Tests
             // Arrange
             var acceptedExtensions = new string[] { "js", "ts" };
             var testFolderPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TestFiles", "ExampleLettersStatistics");
-            var lettersStatistics = new Dictionary<string, int>();
 
             // Act
-            LettersStatisticsCalculator.CalculateLettersStatistics(ref lettersStatistics, testFolderPath, acceptedExtensions);
-            var orderedStatistics = lettersStatistics.OrderByDescending(x => x.Value);
+            var statistics = LettersStatisticsCalculator.GetLettersOccuranceStatisticFromDirectory(testFolderPath, acceptedExtensions);
 
             // Assert
             var expectedResult = new Dictionary<string, int>()
@@ -47,7 +42,7 @@ namespace JsTsLettersStatistics.Tests
                 {"Q", 2 },
             };
 
-            Assert.That(orderedStatistics, Is.EqualTo(expectedResult));
+            Assert.That(statistics, Is.EqualTo(expectedResult));
         }
     }
 }
