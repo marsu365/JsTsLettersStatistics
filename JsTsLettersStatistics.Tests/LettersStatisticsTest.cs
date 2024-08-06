@@ -1,99 +1,53 @@
 
-using System.Text;
+using JsTsLettersStatistics.Statistics;
 
-namespace Tests
+namespace JsTsLettersStatistics.Tests
 {
-    public class Tests
+    public class LettersStatisticsTest
     {
         [Test]
-        public void LettersStatistics()
+        public void LettersOccurancesStatisticsTest()
         {
-            //Arrange
+            // Arrange
             var acceptedExtensions = new string[] { "js", "ts" };
-            var testFolderPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "ExampleLettersStatistics");
+            var testFolderPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TestFiles", "ExampleLettersStatistics");
             var lettersStatistics = new Dictionary<string, int>();
 
-            //Act
-            CalculateLettersStatistics(ref lettersStatistics, testFolderPath, acceptedExtensions);
-
+            // Act
+            LettersStatisticsCalculator.CalculateLettersStatistics(ref lettersStatistics, testFolderPath, acceptedExtensions);
             var orderedStatistics = lettersStatistics.OrderByDescending(x => x.Value);
 
-            Assert.Pass();
-        }
-
-        private void CalculateLettersStatistics(ref Dictionary<string, int> statistics, string path, string[]? acceptedExtensions)
-        {
-            if (File.Exists(path))
+            // Assert
+            var expectedResult = new Dictionary<string, int>()
             {
-                if (acceptedExtensions is null)
-                {
-                    GetStatisticsFromFile(ref statistics, path);
-                    return;
-                }
+                {"E", 271},
+                {"T", 250},
+                {"N", 201},
+                {"R", 187},
+                {"A", 176},
+                {"O", 165},
+                {"S", 150},
+                {"C", 129},
+                {"I", 121},
+                {"U", 93},
+                {"F", 88},
+                {"P", 70},
+                {"D", 70},
+                {"L", 69},
+                {"M", 56},
+                {"H", 50},
+                {"B", 43},
+                {"G", 39},
+                {"W", 24},
+                {"Y", 22},
+                {"V", 18},
+                {"J", 16},
+                {"X", 15},
+                {"K", 11},
+                {"Q", 2 },
+            };
 
-                var fileExtension = Path.GetExtension(path)?.Replace(".", "");
-                if (!acceptedExtensions.Contains(fileExtension?.Replace(".", "")))
-                    return;
-
-                GetStatisticsFromFile(ref statistics, path);
-                return;
-            }
-
-            if (Directory.Exists(path))
-            {
-                foreach (var filePath in Directory.GetFiles(path))
-                {
-                    CalculateLettersStatistics(ref statistics, filePath, acceptedExtensions);
-                }
-
-                foreach (var directoryPath in Directory.GetDirectories(path))
-                {
-                    CalculateLettersStatistics(ref statistics, directoryPath, acceptedExtensions);
-                }
-            }
-        }
-
-        private void GetStatisticsFromFile(ref Dictionary<string, int> statistics, string path)
-        {
-            using (var fileStream = File.OpenRead(path))
-            using (var streamReader = new StreamReader(fileStream, Encoding.UTF8, true, 128))
-            {
-                String line;
-                while (!streamReader.EndOfStream)
-                {
-                    try
-                    {
-                        line = streamReader.ReadLine();
-
-                        if (line is null)
-                            continue;
-
-                        for (int i = 0; i < line.Length; i++)
-                        {
-                            if (!((line[i] >= 65
-                                && line[i] <= 90)
-                                || (line[i] >= 97
-                                && line[i] <= 122)))
-                                continue;
-
-                            var charValue = line[i].ToString().ToUpper();
-
-                            if (statistics.TryGetValue(charValue, out int occurances))
-                            {
-                                statistics[charValue] = ++occurances;
-                                continue;
-                            }
-
-                            statistics[charValue] = 1;
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine($"Exception occured while reading file from path {path}. Message: {ex.Message}");
-                    }
-
-                }
-            }
+            Assert.That(orderedStatistics, Is.EqualTo(expectedResult));
         }
     }
 }

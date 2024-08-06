@@ -10,6 +10,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="ExampleLettersStatistics\**" />
+    <EmbeddedResource Remove="ExampleLettersStatistics\**" />
+    <None Remove="ExampleLettersStatistics\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="coverlet.collector" Version="6.0.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
     <PackageReference Include="NUnit" Version="3.14.0" />
@@ -18,33 +24,33 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\JsTsLettersStatistics\JsTsLettersStatistics.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Using Include="NUnit.Framework" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ExampleLettersStatistics\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="ExampleLettersStatistics\add.ts">
+    <None Update="TestFiles\ExampleLettersStatistics\add.ts">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="ExampleLettersStatistics\after.ts">
+    <None Update="TestFiles\ExampleLettersStatistics\after.ts">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="ExampleLettersStatistics\at.js">
+    <None Update="TestFiles\ExampleLettersStatistics\at.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="ExampleLettersStatistics\ExampleNestedFolder\before.ts">
+    <None Update="TestFiles\ExampleLettersStatistics\ExampleNestedFolder\before.ts">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="ExampleLettersStatistics\ExampleNestedFolder\camelCase.ts">
+    <None Update="TestFiles\ExampleLettersStatistics\ExampleNestedFolder\camelCase.ts">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="ExampleLettersStatistics\ExampleNestedFolder\nonjs">
+    <None Update="TestFiles\ExampleLettersStatistics\ExampleNestedFolder\nonjs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="ExampleLettersStatistics\nonjs.txt">
+    <None Update="TestFiles\ExampleLettersStatistics\nonjs.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

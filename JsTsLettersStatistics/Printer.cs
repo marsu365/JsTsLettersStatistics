@@ -2,9 +2,12 @@
 {
     public static class Printer
     {
-        public static void DisplayLettersStatistics()
+        public static void Displaytatistics(Dictionary<string, int> lettersStatistics)
         {
-            Console.WriteLine("Letters statistics");
+            foreach (var letterStatistic in lettersStatistics)
+            {
+                Console.WriteLine($"{letterStatistic.Key} - {letterStatistic.Value}");
+            }
         }
     }
 }
