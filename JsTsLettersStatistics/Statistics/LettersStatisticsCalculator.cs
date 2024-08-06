@@ -38,7 +38,6 @@ namespace JsTsLettersStatistics.Statistics
 
         private static void GetStatisticsFromFile(ref Dictionary<string, int> statistics, string path)
         {
-            Console.WriteLine("file");
             using (var fileStream = File.OpenRead(path))
             using (var streamReader = new StreamReader(fileStream, Encoding.UTF8, true, 128))
             {

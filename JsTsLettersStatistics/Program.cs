@@ -5,25 +5,23 @@ using System.IO.Compression;
 
 Console.Clear();
 
-Console.WriteLine("Please provide repo owner name");
-string repoOwner = Console.ReadLine();
+var repoOwner = "lodash";
+var projectName = "lodash";
+var fileExtensions = new string[] { "js", "ts" };
 
-Console.WriteLine("Please provide project name");
-string projectName = Console.ReadLine();
-
-var repoStream = await RepoClient.GetRepositoryZip(repoOwner, projectName);
+var repoBytes = await RepoClient.GetRepositoryZip(repoOwner, projectName);
 
 var repoPath = Path.Combine(Directory.GetCurrentDirectory(), "tempRepo");
 if (Directory.Exists(repoPath))
     Directory.Delete(repoPath, true);
 
-ZipFile.ExtractToDirectory(repoStream, repoPath);
+ZipFile.ExtractToDirectory(new MemoryStream(repoBytes), repoPath);
 
 var lettersOccuranceStatistics = new Dictionary<string, int>();
-LettersStatisticsCalculator.CalculateLettersStatistics(ref lettersOccuranceStatistics, repoPath, new string[] { "js", "ts" });
+LettersStatisticsCalculator.CalculateLettersStatistics(ref lettersOccuranceStatistics, repoPath, fileExtensions);
 var orderdedStatistics = lettersOccuranceStatistics.OrderByDescending(x => x.Value).ToDictionary();
 
-Printer.Displaytatistics(orderdedStatistics);
+Printer.Displaytatistics(orderdedStatistics, repoOwner, projectName, fileExtensions);
 
 if (Directory.Exists(repoPath))
     Directory.Delete(repoPath, true);
