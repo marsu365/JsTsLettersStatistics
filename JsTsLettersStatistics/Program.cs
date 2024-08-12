@@ -1,4 +1,7 @@
 ﻿using JsTsLettersStatistics;
+using System.Diagnostics;
+
+var stopWatch = Stopwatch.StartNew();
 
 Console.Clear();
 
@@ -14,3 +17,7 @@ OutputViewer.DisplayStatistics(statistics, repoOwner, projectName, allowedFileEx
 
 if (Directory.Exists(path))
     Directory.Delete(path, true);
+
+Console.WriteLine();
+Console.WriteLine($"###### Results fetched in {stopWatch.ElapsedMilliseconds} miliseconds ######");
+Console.ReadLine();
